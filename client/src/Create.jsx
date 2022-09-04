@@ -23,8 +23,6 @@ class Create extends Component {
     render() {
         return (
             <div>
-                <Link />
-                <h3>Create new player</h3><br/>
                 <form onSubmit={this.handleSubmit}>
                     <label for="username">Username:</label><br />
                     <input type="text" id="username" name="username" value={this.state.username} onChange={this.handleChange} /><br />
