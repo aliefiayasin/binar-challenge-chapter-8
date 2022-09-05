@@ -15,7 +15,8 @@ class UserForm extends React.Component {
         level: '',
         title: 'Create new player',
         playerList: [{id: 1, name:"alief", email:"alief@gmail.com"}, {id: 2, name:"alief2", email:"alief2@gmail.com"}],
-        mode: 1
+        mode: 1,
+        originalList: []
       }
   
       this.handleNameChange = this.handleNameChange.bind(this);
@@ -28,6 +29,8 @@ class UserForm extends React.Component {
       this.handleSearch = this.handleSearch.bind(this);
       this.handleExperienceChange = this.handleExperienceChange.bind(this);
       this.handleLevelChange = this.handleLevelChange.bind(this);
+      this.handleSearchPlayer = this.handleSearchPlayer.bind(this);
+      this.handleReset = this.handleReset.bind(this);
    }
     
     handleNameChange (event) {
@@ -85,6 +88,37 @@ class UserForm extends React.Component {
         }
     }
 
+    handleSearchPlayer(event){
+        let list = [...this.state.playerList];
+        
+        if(this.state.value!='')
+            list = list.filter(x => x.name == this.state.value);
+        if(this.state.email!='')
+                list = list.filter(x => x.email  == this.state.email);
+        if(this.state.experience!='')
+            list = list.filter(x => x.experience  == this.state.experience);
+        if(this.state.level!='')
+            list = list.filter(x => x.level  == this.state.level);
+        this.setState({ 
+                originalList : [...this.state.playerList],
+                playerList : list
+            });
+        event.preventDefault();
+    }
+
+    handleReset(event){
+        if(this.state.originalList.length > 0){
+            this.setState({ 
+                playerList : [this.state.originalList],
+                value: '',
+                email: '',
+                experience: '',
+                level: '',
+            });
+        }
+        event.preventDefault();
+    }
+
     handleCreateNew(event){
         this.setState({ 
             title: "Create new player",
@@ -128,7 +162,8 @@ class UserForm extends React.Component {
         switch(param){
             case 1: return <input type="submit" value="Submit" onClick={this.handleSubmit} />;
             case 2: return <input type="submit" value="Save" onClick={this.handleEditSavePlayer}/>;
-            case 3: return <input type="submit" value="Search" onClick={this.handleSubmit}/>;
+            case 3: return <div><input type="submit" value="Search" onClick={this.handleSearchPlayer}/> &nbsp;
+                                <input type="submit" value="Reset" onClick={this.handleReset}/></div>;
             default: return <></>;
         }    
     }
