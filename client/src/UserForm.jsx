@@ -100,7 +100,7 @@ class UserForm extends React.Component {
         if(this.state.level!='')
             list = list.filter(x => x.level  == this.state.level);
         this.setState({ 
-                originalList : [...this.state.playerList],
+                originalList : this.state.playerList,
                 playerList : list
             });
         event.preventDefault();
@@ -109,7 +109,7 @@ class UserForm extends React.Component {
     handleReset(event){
         if(this.state.originalList.length > 0){
             this.setState({ 
-                playerList : [this.state.originalList],
+                playerList : this.state.originalList,
                 value: '',
                 email: '',
                 experience: '',
